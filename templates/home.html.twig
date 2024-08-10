@@ -1,0 +1,52 @@
+{% extends "base.html.twig" %}
+{% block title %}Acceuil
+{% endblock %}
+{% block body %}
+
+	<h1>Nos Produits</h1>
+	<div class="row">
+		{% for p in products %}
+			<div class="col">
+
+				<div class="card">
+					<img src="{{ p.mainPicture}}" class="img-fluid" alt="Image du produit">
+					<div class="card-body">
+						<h4 class="card-title">{{p.nom}}
+							({{p.price / 1000}}
+							TND)</h4>
+
+						<span class="badge bg-info">{{p.category.name}}</span>
+
+						<p class="card-text">{{p.shortDescription}}</p>
+						<a href="#" class="btn btn-primary btn-sm">Details</a>
+						<a href="#" class="btn btn-success btn-sm">Ajouter</a>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+	<hr>
+	<h2>Nos Services</h2>
+	<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi laboriosam at id dolorem, minus harum?</p>
+	<div class="row">
+		{% include "shared/_assurance.html.twig"  with {
+			'color': 'primary',
+			'icone': 'fas fa-truck',
+			'text': "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, sunt!"
+		 }
+		 %}
+		{% include "shared/_assurance.html.twig"  with {
+			'color': 'success',
+			'icone': 'fas fa-check',
+			'text': "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, sunt!"
+		 }
+		 %}
+		{% include "shared/_assurance.html.twig"  with {
+			'color': 'warning',
+			'icone': 'fas fa-lock',
+			'text': "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, sunt!"
+		 }
+		 %}
+	</div>
+
+{% endblock %}
