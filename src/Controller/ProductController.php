@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
-
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -47,36 +48,32 @@ class ProductController extends AbstractController
         ]);
     }
     #[Route("/admin/product/create", name: 'product_create')]
-    public function create(FormFactoryInterface $factory, CategoryRepository $categoryRepository)
+    public function create(FormFactoryInterface $factory)
     {
         $builder = $factory->createBuilder();
         $builder->add('name', TextType::class, [
             'label' => 'Nom du produit',
-            'attr' => ['class' => 'form-control', 'placeholder' => 'tapez le nom du produit']
+            'attr' => ['placeholder' => 'tapez le nom du produit']
         ])
             ->add('shortDescreption', TextareaType::class, [
                 'label' => 'Descreption du peoduit',
-                'attr' => ['class' => 'form-control', 'placeholder' => 'tapez une descreption']
+                'attr' => ['placeholder' => 'tapez une descreption']
 
             ])
             ->add('price', MoneyType::class, [
                 'label' => 'prix du produit',
-                'attr' => ['class' => 'form-control', 'placeholder' => 'tapez le prix du produit']
+                'attr' => ['placeholder' => 'tapez le prix du produit']
+            ])
+
+
+            ->add('category', EntityType::class, [
+                'label' => 'Categorie',
+                'attr' => [],
+                'placeholder' => '--choisir une categorie--',
+                'class' => Category::class,
+                'choice_label' => 'name'
+
             ]);
-        $options = [];
-        foreach ($categoryRepository->findAll() as $category) {
-            $options[$category->getName()] = $category->getId();
-        }
-        $builder->add('category', ChoiceType::class, [
-            'label' => 'Categorie',
-            'attr' => [
-                'class' => 'form-control'
-            ],
-            'placeholder' => '--choisir une categorie--',
-
-            'choices' => $options
-
-        ]);
 
 
         $form = $builder->getForm();
