@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ProductRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -15,6 +16,7 @@ class Product
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+
     private ?string $nom = null;
 
     #[ORM\Column]
@@ -42,7 +44,7 @@ class Product
         return $this->nom;
     }
 
-    public function setNom(string $nom): static
+    public function setNom(?string $nom): static
     {
         $this->nom = $nom;
 
@@ -54,7 +56,7 @@ class Product
         return $this->price;
     }
 
-    public function setPrice(int $price): static
+    public function setPrice(?int $price): static
     {
         $this->price = $price;
 
@@ -90,7 +92,7 @@ class Product
         return $this->mainPicture;
     }
 
-    public function setMainPicture(string $mainPicture): static
+    public function setMainPicture(?string $mainPicture): static
     {
         $this->mainPicture = $mainPicture;
 
@@ -102,7 +104,7 @@ class Product
         return $this->shortDescription;
     }
 
-    public function setShortDescription(string $shortDescription): static
+    public function setShortDescription(?string $shortDescription): static
     {
         $this->shortDescription = $shortDescription;
 

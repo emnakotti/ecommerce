@@ -26,7 +26,7 @@ use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
-
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ProductController extends AbstractController
 {
@@ -59,7 +59,7 @@ class ProductController extends AbstractController
         ]);
     }
     #[Route("/admin/product/{id}/edit", name: 'product_edit')]
-    public function edit($id, ProductRepository $productRepository, Request $request, EntityManagerInterface $em): Response
+    public function edit($id, ProductRepository $productRepository, Request $request, EntityManagerInterface $em,ValidatorInterface $validator): Response
     {
         $product = $productRepository->find($id);
         if (!$product) {
