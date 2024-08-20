@@ -4,13 +4,17 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Form\DataTransformer\CentimesTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductType extends AbstractType
@@ -29,14 +33,13 @@ class ProductType extends AbstractType
             ])
             ->add('price', MoneyType::class, [
                 'label' => 'prix du produit',
-                'attr' => ['placeholder' => 'tapez le prix du produit']
-            ])
+                'attr' => ['placeholder' => 'tapez le prix du produit'],
+                 'divisor' =>100
+                ])
             ->add('mainPicture', UrlType::class, [
                 'label' => 'Image du produit',
                 'attr' => ['Placeholder' => 'tapez un URL d\'image']
             ])
-
-
             ->add('category', EntityType::class, [
                 'label' => 'Categorie',
                 'attr' => [],
@@ -45,7 +48,10 @@ class ProductType extends AbstractType
                 'choice_label' => 'name'
 
             ]);
+
+       // $builder->get('price')->addModelTransformer(new CentimesTransformer);
     }
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {
