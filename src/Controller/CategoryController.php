@@ -15,6 +15,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CategoryController extends AbstractController
 {
+
+    
     #[Route('/admin/category/create', name: 'category_create')]
     public function create(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
